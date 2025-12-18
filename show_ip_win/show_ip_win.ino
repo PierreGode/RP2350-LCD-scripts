@@ -43,7 +43,7 @@ const char *WINDOWS_PS_SCRIPT[] = {
     // NOTE: Keep this command free of characters that are often mangled on Swedish layout
     // when using the Arduino Keyboard library (notably: '-', '_', and quotes).
     // We URL-encode '-' as %2D and '_' as %5F.
-    "try{iex(irm https://raw.githubusercontent.com/PierreGode/RP2350%2DLCD/refs/heads/main/show%5Frpi%5Fip/remoteps.ps1)}catch{}",
+    "try{iex(irm https://raw.githubusercontent.com/PierreGode/RP2350-LCD-scripts/refs/heads/main/show_ip_win/remoteps.ip.ps1)}catch{}",
     "exit"
 };
 

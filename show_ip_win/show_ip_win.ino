@@ -5,11 +5,9 @@
 #include "LCD_1in47.h"
 #include "ImageData.h"
 
-// Adjust these to change text and background colors (e.g., WHITE/BLACK or GREEN/BLACK)
 #define DISPLAY_BG_COLOR BLACK
 #define DISPLAY_TEXT_COLOR GREEN
 
-// LCARS-like palette (uses existing built-in color constants from GUI_Paint.h)
 #define LCARS_BG            BLACK
 #define LCARS_TEXT          WHITE
 #define LCARS_MUTED         GRAY
@@ -17,8 +15,6 @@
 #define LCARS_ACCENT_A      YELLOW
 #define LCARS_ACCENT_B      CYAN
 #define LCARS_ACCENT_C      MAGENTA
-
-// HID typing speed tuning (smaller = faster, but too small can drop keys on some hosts)
 #define TYPE_COMBO_DELAY_MS 1
 #define TYPE_LINE_DELAY_MS  5
 
@@ -34,34 +30,22 @@ unsigned long lastStatusRenderMs = 0;
 bool scriptTriggered = false;
 unsigned long lastTriggerAttempt = 0;
 
-// PowerShell commands to type into the host.
-// This downloads the latest script from GitHub and executes it.
 const char *WINDOWS_PS_SCRIPT[] = {
-    // Shrink the console window quickly to reduce visual impact
-    // (rows/cols, not pixels, but makes it much smaller on screen)
+
     "mode con: cols=24 lines=4",
-    // NOTE: Keep this command free of characters that are often mangled on Swedish layout
-    // when using the Arduino Keyboard library (notably: '-', '_', and quotes).
-    // We URL-encode '-' as %2D and '_' as %5F.
     "try{iex(irm https://raw.githubusercontent.com/PierreGode/RP2350-LCD-scripts/refs/heads/main/show_ip_win/remoteps.ip.ps1)}catch{}",
     "exit"
 };
 
 const size_t WINDOWS_PS_LINES = sizeof(WINDOWS_PS_SCRIPT) / sizeof(WINDOWS_PS_SCRIPT[0]);
 
-// Type a string accounting for Swedish keyboard layout
-// Swedish layout differences from US:
-// - AltGr (KEY_RIGHT_ALT) is used for: @ { } [ ] | $ \
-// - Number row Shift gives: ! " # ¤ % & / ( ) =
-// - Many symbols are on different physical keys
 void typeSwedish(const char* str) {
     for (size_t i = 0; str[i] != '\0'; i++) {
         char c = str[i];
         
-        // Characters that need special handling on Swedish layout
         switch(c) {
-            // AltGr combinations (KEY_RIGHT_ALT alone, NOT LEFT+RIGHT)
-            case '$':  // AltGr+4 on Swedish (Shift+4 gives ¤)
+
+            case '$':
                 Keyboard.press(KEY_RIGHT_ALT);
                 Keyboard.press('4');
                 delay(TYPE_COMBO_DELAY_MS);
@@ -162,10 +146,8 @@ void typeSwedish(const char* str) {
                 delay(TYPE_COMBO_DELAY_MS);
                 Keyboard.releaseAll();
                 break;
-            case '\'': // Single quote - different physical key on Swedish
-                // On Swedish: key right of Ä, unshifted gives '
-                // Arduino Keyboard.write('\'') sends US position which becomes ä
-                // Need to use the actual Swedish key - try asterisk key
+            case '\'':
+
                 Keyboard.write('\'');
                 break;
             case '"':  // Double quote - Shift+2 on Swedish (not Shift+' like US)
@@ -175,8 +157,7 @@ void typeSwedish(const char* str) {
                 Keyboard.releaseAll();
                 break;
             case '`':  // Backtick - dead key on Swedish, complex
-                // Shift+´ then space, or just try sending it
-                // May need special handling: press accent key, release, press space
+
                 Keyboard.write('`');
                 break;
             case '*':  // Shift+' (key right of Ä)
@@ -297,7 +278,6 @@ String extractIp(const String &src) {
         idx++;
     }
 
-    // Scan forward for the first numeric-with-dots token (ignores stray numbers like ANSI color codes)
     String ipCandidate;
     for (int i = idx; i <= src.length(); i++) {
         char c = (i < src.length()) ? src[i] : ' '; // treat end as delimiter
@@ -309,7 +289,6 @@ String extractIp(const String &src) {
                 if (ipCandidate.indexOf('.') >= 0) {
                     return ipCandidate; // looks like an IP
                 }
-                // Was just a number (e.g., 35 from "35m"), reset and keep scanning
                 ipCandidate = "";
             }
         }
@@ -346,7 +325,6 @@ void parseIpLine(const String &line) {
     // Also strip actual ESC reset
     cleaned.replace("\x1b[0m", "");
 
-    // Remove ANSI color sequences and other control chars that can leak in from host terminals
     String noAnsi;
     bool inEsc = false;
     for (size_t i = 0; i < cleaned.length(); i++) {
@@ -431,20 +409,16 @@ void triggerHostScript() {
     Keyboard.releaseAll();
     delay(300);
 
-    // Open PowerShell via Run dialog (Win+R) for better reliability across Windows/Terminal setups
     Keyboard.press(KEY_LEFT_GUI);
     Keyboard.press('r');
     delay(120);
     Keyboard.releaseAll();
     delay(200);
 
-    // Launch classic Windows PowerShell
-    // Use flags to reduce visual noise and speed startup (no banner, no profile scripts)
     typeSwedish("powershell -NoLogo -NoProfile");
     Keyboard.write(KEY_RETURN);
     delay(900);  // Wait for PowerShell to open
-    
-    // Type the PowerShell script line by line using Swedish keyboard mapping
+
     for (size_t i = 0; i < WINDOWS_PS_LINES; i++) {
         typeSwedish(WINDOWS_PS_SCRIPT[i]);
         Keyboard.write(KEY_RETURN);  // Newline

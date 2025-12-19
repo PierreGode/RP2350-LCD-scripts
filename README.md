@@ -12,12 +12,10 @@
 ### Flashing the Device
 When connecting the RP2350 to your computer via USB for the first time, **hold the BOOT button** while plugging in the USB cable. This puts the device in bootloader mode, allowing the Arduino IDE to flash the code.
 
-### Dependencies
-All required library files are included in the `/dep` folder. Make sure this folder is accessible to the Arduino IDE when compiling the sketches.
 
-## Scripts
+## Run Scripts
 
-Copy desired script into Arduino IDE and upload button.
+Open folder of desired script and double click on the .ino file
 
 ### show_ip
 

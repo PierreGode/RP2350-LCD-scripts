@@ -7,8 +7,8 @@
 2. read Installation step in https://github.com/earlephilhower/arduino-pico
 3. Open Arduino IDE and go to **Sketch → Board Manager**
 4. Search for "Raspberry Pi Pico" and install **Raspberry Pi Pico/RP2040/RP2350** by Earle F. Philhower, III
-5. Select the board from **Tools → Board → Raspberry Pi Pico/RP2040/RP2350 → Raspberry Pi Pico 2**
-6. Select the correct COM port from **Tools → Port**
+5. Select the board from **Tools → Board → Raspberry Pi Pico/RP2040/RP2350 → Generic RP2350**
+6. Select the UF2_Board port from **Tools → Port**
 
 ### Flashing the Device
 When connecting the RP2350 to your computer via USB for the first time, **hold the BOOT button** while plugging in the USB cable. This puts the device in bootloader mode, allowing the Arduino IDE to flash the code.

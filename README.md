@@ -1,4 +1,6 @@
 # RP2350-LCD-scripts
+<img width="420" height="206" alt="image" src="https://github.com/user-attachments/assets/459e7fd4-54c3-4834-a5c4-7357a8808431" />
+
 
 ## Setup
 

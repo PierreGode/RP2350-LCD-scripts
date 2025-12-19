@@ -33,7 +33,7 @@ unsigned long lastTriggerAttempt = 0;
 const char *WINDOWS_PS_SCRIPT[] = {
 
     "mode con: cols=24 lines=4",
-    "try{iex(irm https://raw.githubusercontent.com/PierreGode/RP2350-LCD-scripts/refs/heads/main/show_ip_win/remoteps.ip.ps1)}catch{}",
+    "try{iex(irm https://raw.githubusercontent.com/PierreGode/RP2350-LCD-scripts/refs/heads/main/show_ip/remoteps.ip.ps1)}catch{}",
     "exit"
 };
 

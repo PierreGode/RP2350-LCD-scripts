@@ -4,10 +4,11 @@
 
 ### Arduino IDE Installation
 1. Download and install the [Arduino IDE](https://www.arduino.cc/en/software)
-2. Open Arduino IDE and go to **Sketch → Board Manager**
-3. Search for "Raspberry Pi Pico" and install **Raspberry Pi Pico/RP2040/RP2350** by Earle F. Philhower, III
-4. Select the board from **Tools → Board → Raspberry Pi Pico/RP2040/RP2350 → Raspberry Pi Pico 2**
-5. Select the correct COM port from **Tools → Port**
+2. read https://github.com/earlephilhower/arduino-pico
+3. Open Arduino IDE and go to **Sketch → Board Manager**
+4. Search for "Raspberry Pi Pico" and install **Raspberry Pi Pico/RP2040/RP2350** by Earle F. Philhower, III
+5. Select the board from **Tools → Board → Raspberry Pi Pico/RP2040/RP2350 → Raspberry Pi Pico 2**
+6. Select the correct COM port from **Tools → Port**
 
 ### Flashing the Device
 When connecting the RP2350 to your computer via USB for the first time, **hold the BOOT button** while plugging in the USB cable. This puts the device in bootloader mode, allowing the Arduino IDE to flash the code.

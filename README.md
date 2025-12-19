@@ -18,7 +18,7 @@ When connecting the RP2350 to your computer via USB for the first time, **hold t
 
 ## Run Scripts
 
-Open folder of desired script and double click on the .ino file
+Open folder of desired script and double click on the .ino file ad press upload in the arduino IDE
 
 ### show_ip
 

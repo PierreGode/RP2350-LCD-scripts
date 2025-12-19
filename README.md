@@ -4,7 +4,7 @@
 
 ### Arduino IDE Installation
 1. Download and install the [Arduino IDE](https://www.arduino.cc/en/software)
-2. read https://github.com/earlephilhower/arduino-pico
+2. read Installation step in https://github.com/earlephilhower/arduino-pico
 3. Open Arduino IDE and go to **Sketch → Board Manager**
 4. Search for "Raspberry Pi Pico" and install **Raspberry Pi Pico/RP2040/RP2350** by Earle F. Philhower, III
 5. Select the board from **Tools → Board → Raspberry Pi Pico/RP2040/RP2350 → Raspberry Pi Pico 2**

@@ -1,9 +1,9 @@
 #include <Arduino.h>
 #include <Mouse.h>
 
-#include "../dep/DEV_Config.h"
-#include "../dep/GUI_Paint.h"
-#include "../dep/LCD_1in47.h"
+#include "DEV_Config.h"
+#include "GUI_Paint.h"
+#include "LCD_1in47.h"
 
 #define LCARS_BG       BLACK
 #define LCARS_TEXT     WHITE

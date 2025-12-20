@@ -1,7 +1,6 @@
 #include <Arduino.h>
 #include <Keyboard.h>
 #include <Mouse.h>
-
 #include "DEV_Config.h"
 #include "GUI_Paint.h"
 #include "LCD_1in47.h"

@@ -40,7 +40,6 @@
 #define __FONTS_H
 
 
-/*最大字体微软雅黑24 (32x41) */
 #define MAX_HEIGHT_FONT         41
 #define MAX_WIDTH_FONT          32
 #define OFFSET_BITMAP           
@@ -63,10 +62,10 @@ typedef struct _tFont
 
 
 //GB2312
-typedef struct                                          // 汉字字模数据结构
+typedef struct                                         
 {
-  unsigned char index[4];                               // 汉字内码索引
-  const unsigned char matrix[MAX_HEIGHT_FONT*MAX_WIDTH_FONT/8];  // 点阵码数据
+  unsigned char index[4];                       
+  const unsigned char matrix[MAX_HEIGHT_FONT*MAX_WIDTH_FONT/8];
 }CH_CN;
 
 

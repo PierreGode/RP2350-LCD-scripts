@@ -6,6 +6,9 @@
 #include "GUI_Paint.h"
 #include "LCD_1in47.h"
 
+// Language/Keyboard Support Configuration
+#define KEYBOARD_LANGUAGE_SWE  // Swedish keyboard layout support
+
 #define LCARS_BG       BLACK
 #define LCARS_TEXT     WHITE
 #define LCARS_MUTED    GRAY
@@ -20,12 +23,26 @@ static String serialReceiveBuffer;
 static String lastSerialData;
 static unsigned long lastSerialRxTime = 0;
 
-static constexpr const char *IOS_APP_NAME = "Notes";
-static constexpr const char *IOS_MESSAGE  = "Hello from RP2350 (Spotlight -> Notes -> type)";
+// Localized app name and message for different keyboard layouts
+#ifdef KEYBOARD_LANGUAGE_SWE
+  static constexpr const char *IOS_APP_NAME = "Notes";
+  static constexpr const char *IOS_MESSAGE  = "I Love you ";  // Swedish: "Love you"
+#else
+  static constexpr const char *IOS_APP_NAME = "Notes";
+  static constexpr const char *IOS_MESSAGE  = "Love you";
+#endif
 
 // Focus strategy:
 // - Prefer keyboard-only focus (Cmd+N) which should create/focus a new note.
 // - Optional mouse focus uses RELATIVE moves only (no absolute coordinates). You must enable the iOS pointer.
+//
+// Swedish Keyboard Support:
+// This sketch works with Swedish keyboard layouts on iPhone. The UTF-8 encoded text
+// (including special characters like Ä, Ö, Å) will be typed using the iOS HID protocol.
+// Ensure your Arduino IDE is configured for UTF-8:
+// 1. Save this file as UTF-8 (File > Save with Encoding > UTF-8)
+// 2. Configure Tools > Board settings for RP2350/Pico
+// 3. iOS will use the active keyboard layout (set in iPhone Settings > General > Keyboard)
 static constexpr bool USE_NOTES_CMD_N_FOCUS = true;
 static constexpr bool USE_MOUSE_CENTER_CLICK_FALLBACK = false;
 

@@ -13,13 +13,13 @@
 UWORD *frameBuffer = NULL;
 
 static void drawStatus(const char *line1, const char *line2) {
-	const UWORD H = LCD_1IN47_HEIGHT;
-
 	Paint_Clear(LCARS_BG);
-	Paint_DrawRectangle(0, 0, 48, H - 1, LCARS_BAR, DOT_PIXEL_1X1, DRAW_FILL_FULL);
-	Paint_DrawRectangle(0, 0, 48, 20, LCARS_ACCENT_A, DOT_PIXEL_1X1, DRAW_FILL_FULL);
-	Paint_DrawString_EN(58, 10, line1, &Font24, LCARS_TEXT, LCARS_BG);
-	Paint_DrawString_EN(58, 50, line2, &Font20, LCARS_ACCENT_A, LCARS_BG);
+	
+	int x1 = (LCD_1IN47.WIDTH - (strlen(line1) * Font24.Width)) / 2;
+	int x2 = (LCD_1IN47.WIDTH - (strlen(line2) * Font24.Width)) / 2;
+	
+	Paint_DrawString_EN(x1 > 0 ? x1 : 0, 50, line1, &Font24, LCARS_TEXT, LCARS_BG);
+	Paint_DrawString_EN(x2 > 0 ? x2 : 0, 90, line2, &Font24, LCARS_ACCENT_A, LCARS_BG);
 	LCD_1IN47_Display(frameBuffer);
 }
 

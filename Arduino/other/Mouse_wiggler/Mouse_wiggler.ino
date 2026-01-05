@@ -222,7 +222,7 @@ void loop() {
 	
 	// Random pause between movements
 	int pauseTime = random(300, 20000);
-	int remainingTime = pauseTime;
+	unsigned long endTime = millis() + pauseTime;
 	
 	unsigned long nextBlinkTime = millis() + random(1000, 4000);
 	bool isBlinking = false;
@@ -230,8 +230,10 @@ void loop() {
 	char bufTime[16];
 	
 	// Countdown pause with live display update
-	while (remainingTime > 0) {
+	while (millis() < endTime) {
 		unsigned long now = millis();
+		long remainingTime = endTime - now;
+		if (remainingTime < 0) remainingTime = 0;
 		
 		// Handle blinking
 		if (!isBlinking && now >= nextBlinkTime) {
@@ -243,12 +245,10 @@ void loop() {
 			nextBlinkTime = now + random(1000, 4000);
 		}
 
-		sprintf(bufTime, "Wait: %ds", (remainingTime + 999) / 1000);
+		sprintf(bufTime, "Wait: %lds", (remainingTime + 999) / 1000);
 		drawScreen("", bufTime, 0, 0, isBlinking);
 		
 		// Update in 100ms intervals for smooth countdown
-		int delayAmount = (remainingTime > 100) ? 100 : remainingTime;
-		delay(delayAmount);
-		remainingTime -= delayAmount;
+		delay(100);
 	}
 }
